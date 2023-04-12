@@ -1,0 +1,29 @@
+# 准备大文件largefile.zip(1.3G),midfile.zip(131M)  
+# 测试脚本cmdExecutePool.py(多线程执行命令脚本)，mkdir.py(读写文件，查询文件夹脚本)  
+# 测试SMB脚本,本地环境8核， 8g内存  
+# 在Z:\smb1创建50000个文件夹  
+python cmdExecutePool.py -cmd "python mkdir.py -n 50000 -d Z:\smb1 -s 1" -n 1  
+# 在Z:\smb1查询指定文件夹  
+python cmdExecutePool.py -cmd "python mkdir.py -d Z:\smb1 -s 2 -t SZQ23-0411000010_biJN6auZ" -n 1  
+# 在Z:\smb2写入文件  
+python cmdExecutePool.py -cmd "python mkdir.py -n 1 -src D:\largefile.zip -d Z:\smb2 -s 3" -n 1  
+# 在Z:\smb2读出文件  
+python cmdExecutePool.py -cmd "python mkdir.py -n 1 -d Z:\smb2 -s 6 -t SZQ23-041100000_5xoCPmNJ" -n 1  
+# 测试S3脚本,本地环境8核，8g内存  
+# 在桶test中创建包含txt文件的50000个文件夹(s3:192.168.0.167)  
+python cmdExecutePool.py -cmd "python mkdir.py -n 50000 -src D:\test.txt -d test -s 4" -n 1  
+# 在桶test中查询指定文件夹  
+python cmdExecutePool.py -cmd "python mkdir.py -d test -s 5 -t SZQ23-041000001_YUeTnZlS" -n 1
+# 在桶largefile写入指定文件  
+python cmdExecutePool.py -cmd "python mkdir.py -n 1 -src D:\largefile.zip -d largefile -s 4" -n 1  
+# 在桶largefile读出文件
+python cmdExecutePool.py -cmd "python mkdir.py -n 1 -d largefile -s 7 -t SZQ23-041100000_eECSucn8" -n 1  
+# 测试nfs脚本,服务器环境4核，4g内存(192.168.0.189)  
+# 在/lmsdata2/nfs1创建50000个文件夹  
+python3 cmdExecutePool.py -cmd "python3 mkdir.py -n 50000 -d /lmsdata2/nfs1 -s 1" -n 1  
+# 在/lmsdata2/nfs1查询指定文件夹  
+python3 cmdExecutePool.py -cmd "python3 mkdir.py -d /lmsdata2/nfs1 -s 2 -t SZQ23-0411000046858_1ALwthxH" -n 1  
+# 在/lmsdata2/nfs2写入文件  
+python3 cmdExecutePool.py -cmd "python3 mkdir.py -n 1 -src largefile.zip -d /lmsdata2/nfs2 -s 3" -n 1  
+# 在/lmsdata2/nfs2读出文件  
+python3 cmdExecutePool.py -cmd "python3 mkdir.py -n 1 -d /lmsdata2/nfs2 -s 6 -t SZQ23-041100000_OgsSlZ2W" -n 1  
